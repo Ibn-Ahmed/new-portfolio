@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" x-data="{ menuOpen: false, darkMode: false }" :class="{ 'dark': darkMode }" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ahmed Ibn Ahmed | Developer Portfolio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="https://unpkg.com/alpinejs"></script>
-</head>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ahmed Ibn Ahmed | Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    
+    <script defer src="app.js"></script>
+  </head>
 <body class="bg-white text-black font-sans dark:bg-gray-900 dark:text-white transition-colors duration-300">
   <!-- Navbar -->
   <header class="sticky top-0 bg-white dark:bg-gray-900 shadow z-50">
@@ -20,27 +22,19 @@
       </nav>
       <div class="flex items-center space-x-4">
         <!-- Theme Toggle -->
-         <!-- fix theme problems -->
-        <!-- <button @click="darkMode = ! darkMode" class="text-xl">
-          <span x-show="!darkMode">🌙</span>
-          <span x-show="darkMode">☀️</span>
-        </button> -->
+        <!-- Add theme toggle here if needed -->
         <!-- Mobile Menu Button -->
-        <button class="md:hidden text-cyan-600 dark:text-cyan-400" @click="menuOpen = !menuOpen">
-          <template x-if="!menuOpen">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </template>
-          <template x-if="menuOpen">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </template>
+        <button id="mobileMenuBtn" class="md:hidden text-cyan-600 dark:text-cyan-400">
+          <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="closeIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
       </div>
     </div>
-    <div x-show="menuOpen" x-transition class="absolute top-full left-0 w-full bg-white dark:bg-gray-900 md:hidden px-4 py-4 space-y-2 shadow z-40">
+    <div id="mobileMenu" class="absolute top-full left-0 w-full bg-white dark:bg-gray-900 md:hidden px-4 py-4 space-y-2 shadow z-40 hidden">
       <a href="#projects" class="block text-black dark:text-white">Projects</a>
       <a href="#skills" class="block text-black dark:text-white">Skills</a>
       <a href="#about" class="block text-black dark:text-white">About</a>
@@ -51,8 +45,7 @@
   <!-- Hero -->
   <section class="text-center py-24 px-4 bg-white dark:bg-gradient-to-b dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors">
     <h2 class="text-4xl md:text-6xl font-bold mb-4 dark:text-cyan-400">const Ahmed = { developer: true, alwaysLearning: true }</h2>
-    <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-xl mx-auto">From concept to clean code — I craft solutions that look good and work even better.
-    </p>
+    <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-xl mx-auto">From concept to clean code — I craft solutions that look good and work even better.</p>
     <div class="mt-6 space-x-4">
       <a href="#projects" class="bg-blue-600 dark:bg-cyan-400 text-white dark:text-gray-900 px-6 py-2 rounded hover:bg-blue-700 dark:hover:bg-cyan-300 transition">View Work</a>
       <a href="#contact" class="border border-blue-600 dark:border-cyan-400 text-blue-700 dark:text-cyan-300 px-6 py-2 rounded hover:bg-blue-50 dark:hover:bg-cyan-900 transition">Contact</a>
@@ -64,37 +57,31 @@
     <div class="max-w-5xl mx-auto">
       <h3 class="text-3xl font-bold text-center text-black dark:text-cyan-400 mb-10">Projects</h3>
       <div class="grid md:grid-cols-2 gap-6">
+        <!-- Project Card 1 -->
         <div class="bg-white dark:bg-gray-700 p-6 rounded shadow hover:shadow-lg dark:hover:shadow-xl transition transform hover:scale-105">
           <h4 class="text-xl font-semibold mb-2 text-black dark:text-white">CaloriesAI</h4>
-          <p class="text-gray-700 dark:text-gray-300">A calorie tracking app built with react native and firebase. It allows users to take or upload a picture of their meal and instantly get the calories contained as well as nutritional data. Users can track their calories count and calories target as well as see their calories data and deficits.</p>
-          <div class="mt-6 space-x-4">
-            <a href="https://storage.googleapis.com/caloriesai/CaloriesAi.apk" class="bg-blue-600 dark:bg-cyan-400 text-white dark:text-gray-900 px-6 py-2 rounded hover:bg-blue-700 dark:hover:bg-cyan-300 transition">Download App</a>
-            <a href="https://ibn-ahmed.github.io/video/" target="_blank"
-            class="border border-blue-600 dark:border-cyan-400 text-blue-700 dark:text-cyan-300 px-6 py-2 rounded hover:bg-blue-50 dark:hover:bg-cyan-900 transition">
-            See Preview
-         </a>
-         
-
-          </div>
-        </div>
-        <div class="bg-white dark:bg-gray-700 p-6 rounded shadow hover:shadow-lg dark:hover:shadow-xl transition transform hover:scale-105">
-          <h4 class="text-xl font-semibold mb-2 text-black dark:text-white">Note Taking App</h4>
-          <p class="text-gray-700 dark:text-gray-300">
-            A simple CRUD note-taking app built with GraphQL and PHP. This project showcases my ability to work with GraphQL APIs, backend logic, and full-stack integration.
-            <br><br>
-            Due to CORS limitations on free hosting platforms, a live preview isn't available. However, you can explore the full source code below.
-          </p>
-          <div class="mt-6">
-            <a href="https://github1s.com/Ibn-Ahmed/basic-crud" target="_blank"
-               class="bg-blue-600 dark:bg-cyan-400 text-white dark:text-gray-900 px-6 py-2 rounded hover:bg-blue-700 dark:hover:bg-cyan-300 transition">
-              View Code
+          <p class="text-gray-700 dark:text-gray-300">A calorie tracking app built with react native and firebase...</p>
+          <div class="mt-6 flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+            <a href="https://storage.googleapis.com/caloriesai/CaloriesAi.apk" class="bg-blue-600 dark:bg-cyan-400 text-white dark:text-gray-900 px-6 py-2 rounded hover:bg-blue-700 dark:hover:bg-cyan-300 transition">
+              Download App
+            </a>
+            <a href="https://ibn-ahmed.github.io/video/" target="_blank" class="border border-blue-600 dark:border-cyan-400 text-blue-700 dark:text-cyan-300 px-6 py-2 rounded hover:bg-blue-50 dark:hover:bg-cyan-900 transition">
+              See Preview
             </a>
           </div>
-        </div>             
+          
+        </div>
+        <!-- Project Card 2 -->
+        <div class="bg-white dark:bg-gray-700 p-6 rounded shadow hover:shadow-lg dark:hover:shadow-xl transition transform hover:scale-105">
+          <h4 class="text-xl font-semibold mb-2 text-black dark:text-white">GhanaMovingCo</h4>
+          <p class="text-gray-700 dark:text-gray-300">A react website built for a professional moving company in Ghana...</p>
+          <div class="mt-6">
+            <a href="https://ghanamovingco.store" target="_blank" class="border border-blue-600 dark:border-cyan-400 text-blue-700 dark:text-cyan-300 px-6 py-2 rounded hover:bg-blue-50 dark:hover:bg-cyan-900 transition">Check it out.</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
-
 
   <!-- Skills -->
   <section id="skills" class="py-16 px-4 bg-white dark:bg-gray-900 transition-colors">
@@ -108,7 +95,10 @@
       </div>
     </div>
   </section>
-  <section id="skills" class="py-16 px-4 bg-white dark:bg-gray-900 transition-colors">
+
+  <!-- Certifications -->
+  <section  class="py-16 px-4 bg-white dark:bg-gray-900 transition-colors">
+
     <div class="max-w-4xl mx-auto text-center">
       <h3 class="text-3xl font-bold text-black dark:text-cyan-400 mb-10">Certifications</h3>
       <div class="flex flex-wrap justify-center gap-4">
@@ -124,7 +114,7 @@
       </div>
     </div>
   </section>
-
+  
   <!-- About -->
   <section id="about" class="py-16 px-4 bg-gray-50 dark:bg-gray-800 transition-colors">
     <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
@@ -149,113 +139,33 @@
     </div>
   </section>
 
- <!-- Contact -->
-<section id="contact" class="py-16 px-4 bg-white dark:bg-gray-900 transition-colors">
+  <!-- Contact -->
+  <section id="contact" class="py-16 px-4 bg-white dark:bg-gray-900 transition-colors">
     <div class="max-w-xl mx-auto text-center">
       <h3 class="text-3xl font-bold text-gray-800 dark:text-cyan-400 mb-8">Let's Connect</h3>
-      
-      <!-- Alpine.js State for Form -->
-      <div x-data="contactForm()">
-        <form @submit.prevent="submitForm" class="space-y-4" >
-          <!-- Name Input -->
-          <div>
-            <input type="text" x-model="form.name" placeholder="Your Name" class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded" :class="{'border-red-500': errors.name}" name="name">
-            <p x-show="errors.name" x-text="errors.name" class="text-red-500 text-sm mt-2"></p>
-          </div>
-          
-          <!-- Email Input -->
-          <div>
-            <input type="email" x-model="form.email" placeholder="Your Email" class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded" :class="{'border-red-500': errors.email}" name="email">
-            <p x-show="errors.email" x-text="errors.email" class="text-red-500 text-sm mt-2"></p>
-          </div>
-          
-          <!-- Message Input -->
-          <div>
-            <textarea x-model="form.message" rows="4" placeholder="Your Message" class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded" :class="{'border-red-500': errors.message}" name="message"></textarea>
-            <p x-show="errors.message" x-text="errors.message" class="text-red-500 text-sm mt-2"></p>
-          </div>
-  
-          <!-- Submit Button -->
-          <button type="submit" class="bg-blue-600 dark:bg-cyan-400 text-white dark:text-gray-900 px-6 py-2 rounded hover:bg-blue-700 dark:hover:bg-cyan-300 transition" :disabled="loading">
-            <span x-show="!loading">Send Message</span>
-            <span x-show="loading">Sending...</span>
-          </button>
-        </form>
-      </div>
-    </div>
-</section>
-
-  
-          <!-- Submit Button -->
-          <button type="submit" class="bg-blue-600 dark:bg-cyan-400 text-white dark:text-gray-900 px-6 py-2 rounded hover:bg-blue-700 dark:hover:bg-cyan-300 transition" :disabled="loading">
-            <span x-show="!loading">Send Message</span>
-            <span x-show="loading">Sending...</span>
-          </button>
-        </form>
-      </div>
+      <form id="contactForm" class="space-y-4">
+        <div>
+          <input type="text" id="name" name="name" placeholder="Your Name" class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded" />
+          <p id="nameError" class="text-red-500 text-sm mt-2 hidden"></p>
+        </div>
+        <div>
+          <input type="email" id="email" name="email" placeholder="Your Email" class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded" />
+          <p id="emailError" class="text-red-500 text-sm mt-2 hidden"></p>
+        </div>
+        <div>
+          <textarea id="message" name="message" rows="4" placeholder="Your Message" class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded"></textarea>
+          <p id="messageError" class="text-red-500 text-sm mt-2 hidden"></p>
+        </div>
+        <button type="submit" id="submitBtn" class="bg-blue-600 dark:bg-cyan-400 text-white dark:text-gray-900 px-6 py-2 rounded hover:bg-blue-700 dark:hover:bg-cyan-300 transition">Send Message</button>
+      </form>
     </div>
   </section>
-  
-  
 
   <!-- Footer -->
   <footer class="text-center py-6 text-gray-600 dark:text-gray-400 text-sm bg-white dark:bg-gray-900 transition-colors">
-    &copy; 2025 Ahmed Ibn Ahmed. Built with alpinejs❤️,
+    &copy; 2025 Ahmed Ibn Ahmed. Built with ❤️,
     <a href="https://github.com/Ibn-Ahmed" target="_blank" class="hover:underline text-blue-600 dark:text-cyan-400">GitHub</a> |
     <a href="https://www.linkedin.com/in/ibn-ahmed-4698a1360" target="_blank" class="hover:underline text-blue-600 dark:text-cyan-400">LinkedIn</a>
   </footer>
-  <script>
-    function contactForm() {
-      return {
-        form: {
-          name: '',
-          email: '',
-          message: ''
-        },
-        errors: {},
-        loading: false,
-  
-        // Function to submit the form
-        submitForm() {
-          this.errors = {}; // Reset errors
-  
-          // Basic Validation
-          if (!this.form.name || !this.form.email || !this.form.message) {
-            if (!this.form.name) this.errors.name = 'Name is required';
-            if (!this.form.email) this.errors.email = 'Email is required';
-            if (!this.form.message) this.errors.message = 'Message is required';
-            return;
-          }
-  
-          this.loading = true; // Show loading state
-  
-  
-        //   If using an API, replace this setTimeout with an actual request like:
-          fetch('https://formspree.io/f/mrbpvpdd', {
-            method: 'POST',
-            body: JSON.stringify(this.form),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }).then(response => {
-            this.loading = false;
-            // Handle success response
-            if(response.ok) {
-                this.form.name=''
-                this.form.email=''
-                this.form.message=''
-
-                alert('Message sent successfully. Thanks!')
-            }
-            console.log(response.status)
-          }).catch(error => {
-            this.loading = false;
-            console.log(`error: ${error}`)
-            // Handle error response
-          });
-        }
-      }
-    }
-  </script>
 </body>
 </html>
